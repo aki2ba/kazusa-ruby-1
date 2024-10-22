@@ -21,8 +21,17 @@ end
 class HelloServlet < WEBrick::HTTPServlet::AbstractServlet
   def do_GET(request, response)
     response.status = 200
-    response['Content-Type'] = 'text/plain'
-    response.body = 'Hello from another endpoint!'
+    response['Content-Type'] = 'text/html; charset=utf-8'
+    response.body = File.open("./html/index.html").read
+  end
+end
+
+# 新しいサーブレットを作成
+class ImageServlet < WEBrick::HTTPServlet::AbstractServlet
+  def do_GET(request, response)
+    response.status = 200
+    response['Content-Type'] = 'image/png'
+    response.body = File.open("./image/character_touma.png").read
   end
 end
 
@@ -31,6 +40,8 @@ server.mount('/', GoodbyeServlet)
 
 # 新しいエンドポイントにサーブレットをマウント
 server.mount('/', HelloServlet)
+
+server.mount('/image', ImageServlet)
 
 # Ctrl+Cでサーバーを停止するためのシグナルハンドラを設定
 trap('INT') { server.shutdown }
