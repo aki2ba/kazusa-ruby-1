@@ -10,10 +10,13 @@ require_relative 'lib/stage_2/StageTwoPostServlet'
 require_relative 'lib/stage_2/StageTwoServlet'
 require_relative 'lib/HomeServlet'
 require_relative 'lib/ImageServlet'
+require_relative 'lib/InstructionServlet'
 
 server = WEBrick::HTTPServer.new(Port: 8080)
 
 server.mount('/', HomeServlet)
+
+server.mount('/instruction', InstructionServlet)
 
 server.mount('/image', ImageServlet)
 
